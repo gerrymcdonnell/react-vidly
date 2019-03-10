@@ -27,13 +27,17 @@ class Movies extends Component {
   };
 
   render() {
-    const { length: count } = this.state.movies;
+    const count = this.state.movies.length;
+    /*vid40 also can be written as    
+      const { length: count } = this.state.movies;
+    */
 
     if (count === 0) return <p>There are no movies in the database.</p>;
 
     return (
+      //in jsx must return single element i.e readct fragment
       <React.Fragment>
-        <p>..Showing {count} movies in the database.</p>
+        <p>Showing {count} movies in the database.</p>
 
         {/*bootstrap table*/}
 
