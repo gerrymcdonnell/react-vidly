@@ -67,10 +67,12 @@ const movies = [
   }
 ];
 
+//returns all movies
 export function getMovies() {
   return movies;
 }
 
+//1 movie
 export function getMovie(id) {
   return movies.find(m => m._id === id);
 }

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+//curly braces for named expoprts
 import { getMovies } from "../services/fakeMovieService";
 
 class Movies extends Component {
+  //iniitalise moves with aray of movies
   state = {
     movies: getMovies()
   };
@@ -24,7 +26,7 @@ class Movies extends Component {
         {/*bootstrap table*/}
 
         {/*zen coding tip:  table.table>thead>tr>th*4 and hit TAB to generate the table*/}
-        
+
         <table className="table">
           <thead>
             <tr>
@@ -34,18 +36,21 @@ class Movies extends Component {
               <th>rate</th>
             </tr>
           </thead>
-          
-          {/*tbody>tr*4*/}
-          
+
+          {/*tbody>tr>td*4*/}
+
           <tbody>
-            <tr></tr>
-            <tr></tr>
-            <tr></tr>
-            <tr></tr>
+            {/*vid 38: map each movie object and map to a tr elemenet*/}
+            {this.state.movies.map(movie => (
+              <tr>
+                <td>{movie.title}</td>
+                <td>{movie.genre.name}</td>
+                <td>{movie.numberInStock}</td>
+                <td>{movie.dailyRentalRate}</td>
+              </tr>
+            ))}
           </tbody>
-
         </table>
-
       </React.Fragment>
     );
   }
