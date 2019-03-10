@@ -59,7 +59,7 @@ class Movies extends Component {
                 <td>
                   {/*to pass an agrumnet use an arrow function for handleDelete */}
                   <button
-                    onclick={() => this.handleDelete(movie)}
+                    onClick={() => this.handleDelete(movie)}
                     className="btn btn-danger btn-sm"
                   >
                     Delete
