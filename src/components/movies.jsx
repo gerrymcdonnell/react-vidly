@@ -17,6 +17,13 @@ class Movies extends Component {
   //uses arrow function syntax
   handleDelete = movie => {
     console.log(movie);
+    //create a new movies array except the one being deleted
+    //using filter method
+    //arrow function get all the movies except the one been passed in
+    const movies = this.state.movies.filter(m => m._id !== movie._id);
+
+    //set the movies property to our new movies object which will overide props of state object
+    this.setState({ movies: movies });
   };
 
   render() {
