@@ -5,6 +5,7 @@ import "./App.css";
 class App extends Component {
   render() {
     return (
+      /* A JSX comment */
       <main className="container">
         <Movies />
       </main>
