@@ -34,10 +34,11 @@ class Movies extends Component {
               <th>genre</th>
               <th>stock</th>
               <th>rate</th>
+              <th></th>
             </tr>
           </thead>
 
-          {/*tbody>tr>td*4*/}
+          {/* zen coding tbody>tr>td*4 */}
 
           <tbody>
             {/*vid 38: map each movie object and map to a tr elemenet*/}
@@ -46,7 +47,9 @@ class Movies extends Component {
                 <td>{movie.title}</td>
                 <td>{movie.genre.name}</td>
                 <td>{movie.numberInStock}</td>
-                <td>{movie.dailyRentalRate}</td>
+                <td>{movie.dailyRentalRate}</td>                
+                {/*zen coding button.btn.btn-danger.btn-sm and press TAB at end*/}                
+                <td><button className="btn btn-danger btn-sm">Delete</button></td>
               </tr>
             ))}
           </tbody>
