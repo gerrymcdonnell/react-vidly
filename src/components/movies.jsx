@@ -9,9 +9,14 @@ class Movies extends Component {
   };
 
   /*not sure how this works*/
-  handleDelete = movie => {
+  /*handleDelete = movie => {
     const movies = this.state.movies.filter(m => m._id !== movie._id);
     this.setState({ movies });
+  };*/
+
+  //uses arrow function syntax
+  handleDelete = movie => {
+    console.log(movie);
   };
 
   render() {
@@ -34,7 +39,7 @@ class Movies extends Component {
               <th>genre</th>
               <th>stock</th>
               <th>rate</th>
-              <th></th>
+              <th />
             </tr>
           </thead>
 
@@ -42,14 +47,24 @@ class Movies extends Component {
 
           <tbody>
             {/*vid 38: map each movie object and map to a tr elemenet*/}
+            {/** vid 39: must use key attribute on element being repeated */}
             {this.state.movies.map(movie => (
-              <tr>
+              <tr key={movie._id}>
                 <td>{movie.title}</td>
                 <td>{movie.genre.name}</td>
                 <td>{movie.numberInStock}</td>
-                <td>{movie.dailyRentalRate}</td>                
-                {/*zen coding button.btn.btn-danger.btn-sm and press TAB at end*/}                
-                <td><button className="btn btn-danger btn-sm">Delete</button></td>
+                <td>{movie.dailyRentalRate}</td>
+                {/*zen coding button.btn.btn-danger.btn-sm and press TAB at end*/}
+
+                <td>
+                  {/*to pass an agrumnet use an arrow function for handleDelete */}
+                  <button
+                    onclick={() => this.handleDelete(movie)}
+                    className="btn btn-danger btn-sm"
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
