@@ -1,18 +1,26 @@
 import React, { Component } from "react";
 //curly braces for named expoprts
 import { getMovies } from "../services/fakeMovieService";
+import { getGenres } from "../services/fakeGenreService";
 
-import Pagination from './common/pagination';
+import Pagination from "./common/pagination";
+import ListGroup from "./common/listGroup";
 
-import { paginate } from '../utils/paginate';
+import { paginate } from "../utils/paginate";
 
 class Movies extends Component {
   //iniitalise moves with aray of movies
   state = {
-    movies: getMovies(),
+    movies: [],
+    genres: [],
     pageSize: 5,
     currentPage: 1
   };
+
+  //vid 73 called when component is rendered in DOM
+  componentDidMount() {
+    this.setState({ movies: getMovies(), genres: getGenres() });
+  }
 
   /*not sure how this works*/
   /*handleDelete = movie => {
@@ -21,7 +29,7 @@ class Movies extends Component {
   };*/
 
   //uses arrow function syntax
-  handleDelete = (movie) => {
+  handleDelete = movie => {
     console.log(movie);
     //create a new movies array except the one being deleted
     //using filter method
@@ -33,20 +41,23 @@ class Movies extends Component {
   };
 
   //TBI
-  handleLike = (movie) => {
-
-  }
+  handleLike = movie => {};
 
   //vid 67
-  handlePageChange = (page) => {
+  handlePageChange = page => {
     console.log("page: ", page);
     //update state to current page
     this.setState({ currentPage: page });
-  }
+  };
+
+  //vid 73
+  handleGenreSelect = genre => {
+    console.log(genre);
+  };
 
   render() {
     const count = this.state.movies.length;
-    //vid40 also can be written as: const { length: count } = this.state.movies;   
+    //vid40 also can be written as: const { length: count } = this.state.movies;
 
     //object destructuring extract from the state object
     const { pageSize, currentPage } = this.state;
@@ -57,60 +68,67 @@ class Movies extends Component {
     const movies = paginate(this.state.movies, currentPage, pageSize);
 
     return (
-      //in jsx must return single element i.e readct fragment
-      <React.Fragment>
-        <p>Showing {count} movies in the database.</p>
+      //in jsx must return single element i.e react fragment
+      <div className="row">
+        <div className="col-2">
+          <ListGroup
+            items={this.state.genres}
+            onItemSelect={this.handleGenreSelect}
+          />
+        </div>
+        <div className="col">
+          <p>Showing {count} movies in the database.</p>
 
-        {/*bootstrap table*/}
+          {/*bootstrap table*/}
 
-        {/*zen coding tip:  table.table>thead>tr>th*4 and hit TAB to generate the table*/}
+          {/*zen coding tip:  table.table>thead>tr>th*4 and hit TAB to generate the table*/}
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>genre</th>
-              <th>stock</th>
-              <th>rate</th>
-              <th />
-            </tr>
-          </thead>
-
-          {/* zen coding tbody>tr>td*4 */}
-
-          <tbody>
-            {/*vid 38: map each movie object and map to a tr elemenet*/}
-            {/** vid 39: must use key attribute on element being repeated */}
-            {movies.map(movie => (
-              <tr key={movie._id}>
-                <td>{movie.title}</td>
-                <td>{movie.genre.name}</td>
-                <td>{movie.numberInStock}</td>
-                <td>{movie.dailyRentalRate}</td>
-                {/*zen coding button.btn.btn-danger.btn-sm and press TAB at end*/}
-
-                <td>
-                  {/*to pass an agrumnet use an arrow function for handleDelete */}
-                  <button
-                    onClick={() => this.handleDelete(movie)}
-                    className="btn btn-danger btn-sm"
-                  >
-                    Delete
-                  </button>
-                </td>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>genre</th>
+                <th>stock</th>
+                <th>rate</th>
+                <th />
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
 
-        <Pagination
-          itemsCount={count}
-          pageSize={pageSize}
-          onPageChange={this.handlePageChange}
-          currentPage={currentPage}
-        />
+            {/* zen coding tbody>tr>td*4 */}
 
-      </React.Fragment>
+            <tbody>
+              {/*vid 38: map each movie object and map to a tr elemenet*/}
+              {/** vid 39: must use key attribute on element being repeated */}
+              {movies.map(movie => (
+                <tr key={movie._id}>
+                  <td>{movie.title}</td>
+                  <td>{movie.genre.name}</td>
+                  <td>{movie.numberInStock}</td>
+                  <td>{movie.dailyRentalRate}</td>
+                  {/*zen coding button.btn.btn-danger.btn-sm and press TAB at end*/}
+
+                  <td>
+                    {/*to pass an agrumnet use an arrow function for handleDelete */}
+                    <button
+                      onClick={() => this.handleDelete(movie)}
+                      className="btn btn-danger btn-sm"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <Pagination
+            itemsCount={count}
+            pageSize={pageSize}
+            onPageChange={this.handlePageChange}
+            currentPage={currentPage}
+          />
+        </div>
+      </div>
     );
   }
 }
