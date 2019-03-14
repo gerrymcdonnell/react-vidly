@@ -4,6 +4,8 @@ import { getMovies } from "../services/fakeMovieService";
 
 import Pagination from './common/pagination';
 
+import { paginate } from '../utils/paginate';
+
 class Movies extends Component {
   //iniitalise moves with aray of movies
   state = {
@@ -44,14 +46,15 @@ class Movies extends Component {
 
   render() {
     const count = this.state.movies.length;
-    /*vid40 also can be written as   
-      const { length: count } = this.state.movies;
-    */
+    //vid40 also can be written as: const { length: count } = this.state.movies;   
 
     //object destructuring extract from the state object
     const { pageSize, currentPage } = this.state;
 
     if (count === 0) return <p>There are no movies in the database.</p>;
+
+    //call paginate function
+    const movies = paginate(this.state.movies, currentPage, pageSize);
 
     return (
       //in jsx must return single element i.e readct fragment
@@ -78,7 +81,7 @@ class Movies extends Component {
           <tbody>
             {/*vid 38: map each movie object and map to a tr elemenet*/}
             {/** vid 39: must use key attribute on element being repeated */}
-            {this.state.movies.map(movie => (
+            {movies.map(movie => (
               <tr key={movie._id}>
                 <td>{movie.title}</td>
                 <td>{movie.genre.name}</td>
