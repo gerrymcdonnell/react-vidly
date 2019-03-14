@@ -70,11 +70,15 @@ class Movies extends Component {
     return (
       //in jsx must return single element i.e react fragment
       <div className="row">
-        <div className="col-2">
+        <div className="col-3">
+          
           <ListGroup
             items={this.state.genres}
+            textProperty="name"
+            valueProperty="_id"
             onItemSelect={this.handleGenreSelect}
           />
+
         </div>
         <div className="col">
           <p>Showing {count} movies in the database.</p>
