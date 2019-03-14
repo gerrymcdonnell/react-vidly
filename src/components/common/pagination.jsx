@@ -7,7 +7,9 @@ const Pagination = (props) => {
 
     const { itemsCount, pageSize } = props;
 
-    const pagesCount = itemsCount / pageSize;
+    const pagesCount = Math.ceil(itemsCount / pageSize);
+
+    if (pagesCount === 1) return null;
 
     const pages = _lodash.range(1, pagesCount + 1);
 
@@ -17,7 +19,9 @@ const Pagination = (props) => {
             <ul className="pagination">
                 {/**map each item to a li item */}
                 {pages.map(page => (
-                    <li key={page} className="page-item"><a className="page-link">{page}</a></li>
+                    <li key={page} className="page-item">
+                        <a className="page-link">{page}</a>
+                    </li>
                 ))}
             </ul>
         </nav>

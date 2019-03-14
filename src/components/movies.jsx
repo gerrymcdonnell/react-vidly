@@ -8,7 +8,7 @@ class Movies extends Component {
   //iniitalise moves with aray of movies
   state = {
     movies: getMovies(),
-    pageSize: 4
+    pageSize: 10
   };
 
   /*not sure how this works*/
@@ -30,12 +30,12 @@ class Movies extends Component {
   };
 
   //TBI
-  handleLike=(movie)=>{
+  handleLike = (movie) => {
 
   }
 
   //vid 67
-  handlePageChange=(page)=>{
+  handlePageChange = (page) => {
     console.log(page);
   }
 
