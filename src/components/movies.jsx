@@ -7,7 +7,8 @@ import Pagination from './common/pagination';
 class Movies extends Component {
   //iniitalise moves with aray of movies
   state = {
-    movies: getMovies()
+    movies: getMovies(),
+    pageSize: 4
   };
 
   /*not sure how this works*/
@@ -17,7 +18,7 @@ class Movies extends Component {
   };*/
 
   //uses arrow function syntax
-  handleDelete = movie => {
+  handleDelete = (movie) => {
     console.log(movie);
     //create a new movies array except the one being deleted
     //using filter method
@@ -27,6 +28,16 @@ class Movies extends Component {
     //set the movies property to our new movies object which will overide props of state object
     this.setState({ movies: movies });
   };
+
+  //TBI
+  handleLike=(movie)=>{
+
+  }
+
+  //vid 67
+  handlePageChange=(page)=>{
+    console.log(page);
+  }
 
   render() {
     const count = this.state.movies.length;
@@ -82,6 +93,9 @@ class Movies extends Component {
             ))}
           </tbody>
         </table>
+
+        <Pagination itemsCount={count} pageSize={this.state.pageSize} onPageChange={this.handlePageChange} />
+
       </React.Fragment>
     );
   }
