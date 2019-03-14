@@ -1,6 +1,7 @@
 //stateless functional component
 //imr
 import React from 'react';
+import _lodash from 'lodash';
 
 const Pagination = (props) => {
 
@@ -8,11 +9,16 @@ const Pagination = (props) => {
 
     const pagesCount = itemsCount / pageSize;
 
+    const pages = _lodash.range(1, pagesCount + 1);
+
     //shortcut: nav>ul.pagination>li.page-item>a.page-link
     return (
         <nav>
             <ul className="pagination">
-                <li className="page-item"><a className="page-link">Page 1</a></li>
+                {/**map each item to a li item */}
+                {pages.map(page => (
+                    <li key={page} className="page-item"><a className="page-link">{page}</a></li>
+                ))}
             </ul>
         </nav>
     );
