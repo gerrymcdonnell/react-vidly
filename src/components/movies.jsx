@@ -2,6 +2,8 @@ import React, { Component } from "react";
 //curly braces for named expoprts
 import { getMovies } from "../services/fakeMovieService";
 
+import Pagination from './common/pagination';
+
 class Movies extends Component {
   //iniitalise moves with aray of movies
   state = {
