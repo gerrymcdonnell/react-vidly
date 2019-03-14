@@ -8,7 +8,8 @@ class Movies extends Component {
   //iniitalise moves with aray of movies
   state = {
     movies: getMovies(),
-    pageSize: 5
+    pageSize: 5,
+    currentPage: 1
   };
 
   /*not sure how this works*/
@@ -36,14 +37,19 @@ class Movies extends Component {
 
   //vid 67
   handlePageChange = (page) => {
-    console.log("page: ",page);
+    console.log("page: ", page);
+    //update state to current page
+    this.setState({ currentPage: page });
   }
 
   render() {
     const count = this.state.movies.length;
-    /*vid40 also can be written as    
+    /*vid40 also can be written as   
       const { length: count } = this.state.movies;
     */
+
+    //object destructuring extract from the state object
+    const { pageSize, currentPage } = this.state;
 
     if (count === 0) return <p>There are no movies in the database.</p>;
 
@@ -94,9 +100,11 @@ class Movies extends Component {
           </tbody>
         </table>
 
-        <Pagination itemsCount={count} 
-        pageSize={this.state.pageSize} 
-        onPageChange={this.handlePageChange} />
+        <Pagination itemsCount={count}
+          pageSize={pageSize}
+          onPageChange={this.handlePageChange}
+          currentPage={currentPage}
+        />
 
       </React.Fragment>
     );

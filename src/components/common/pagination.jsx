@@ -6,7 +6,7 @@ import _lodash from 'lodash';
 const Pagination = (props) => {
 
     //object destructuring
-    const { itemsCount, pageSize, onPageChange } = props;
+    const { itemsCount, pageSize, currentPage,onPageChange } = props;
 
     const pagesCount = Math.ceil(itemsCount / pageSize);
 
