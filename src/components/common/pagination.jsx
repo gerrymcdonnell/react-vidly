@@ -6,7 +6,7 @@ import _lodash from 'lodash';
 const Pagination = (props) => {
 
     //object destructuring
-    const { itemsCount, pageSize, currentPage,onPageChange } = props;
+    const { itemsCount, pageSize, currentPage, onPageChange } = props;
 
     const pagesCount = Math.ceil(itemsCount / pageSize);
 
@@ -20,7 +20,7 @@ const Pagination = (props) => {
             <ul className="pagination">
                 {/**map each item to a li item */}
                 {pages.map(page => (
-                    <li key={page} className="page-item">
+                    <li key={page} className={page === currentPage ? 'page-item active' : 'page-item'}>
                         <a className="page-link" onClick={() => onPageChange(page)} >{page}</a>
                     </li>
                 ))}
