@@ -89,7 +89,7 @@ class Movies extends Component {
 
         </div>
         <div className="col">
-          <p>Showing {count} movies in the database.</p>
+          <p>Showing {filtered.length} movies in the database.</p>
 
           {/*bootstrap table*/}
 
