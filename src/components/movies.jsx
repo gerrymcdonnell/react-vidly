@@ -41,7 +41,7 @@ class Movies extends Component {
   };
 
   //TBI
-  handleLike = movie => {};
+  handleLike = movie => { };
 
   //vid 67
   handlePageChange = page => {
@@ -52,8 +52,8 @@ class Movies extends Component {
 
   //vid 73,76
   handleGenreSelect = genre => {
-    console.log(genre);
-    this.setState({selectGenre:genre});
+    console.log(genre._id);
+    this.setState({ selectGenre: genre });
   };
 
   render() {
@@ -61,18 +61,24 @@ class Movies extends Component {
     //vid40 also can be written as: const { length: count } = this.state.movies;
 
     //object destructuring extract from the state object
-    const { pageSize, currentPage } = this.state;
+    const { pageSize, selectedGenre, currentPage, movies: allMovies } = this.state;
 
     if (count === 0) return <p>There are no movies in the database.</p>;
 
+    //vid77 if the genre is selected apply filter otherwise dont
+    //turnery operator filter the movies so that the genre is the same as the selected genre id
+    const filtered = selectedGenre
+      ? allMovies.filter(m => m.genre._id === selectedGenre._id)
+      : allMovies;
+
     //call paginate function
-    const movies = paginate(this.state.movies, currentPage, pageSize);
+    const movies = paginate(filtered, currentPage, pageSize);
 
     return (
       //in jsx must return single element i.e react fragment
       <div className="row">
         <div className="col-3">
-          
+
           <ListGroup
             items={this.state.genres}
             selectedItem={this.state.selectGenre}
@@ -128,7 +134,7 @@ class Movies extends Component {
           </table>
 
           <Pagination
-            itemsCount={count}
+            itemsCount={filtered.length}
             pageSize={pageSize}
             onPageChange={this.handlePageChange}
             currentPage={currentPage}
