@@ -3,16 +3,16 @@ import React from 'react';
 //functional component
 const MoviesTable = (props) => {
 
-    const { movies, onDelete, onLike } = props;
+    const { movies, onDelete, onLike,onSort } = props;
 
     return (
         <table className="table">
             <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>genre</th>
-                    <th>stock</th>
-                    <th>rate</th>
+                    <th onClick={()=>onSort('title')}>Title</th>
+                    <th onClick={()=>onSort('genre.name')}>genre</th>
+                    <th onClick={()=>onSort('numberInStock')}>stock</th>
+                    <th onClick={()=>onSort('dailyRentalRate')}>rate</th>
                     <th />
                 </tr>
             </thead>

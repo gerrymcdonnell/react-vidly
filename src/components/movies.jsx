@@ -6,8 +6,9 @@ import { getGenres } from "../services/fakeGenreService";
 import Pagination from "./common/pagination";
 import ListGroup from "./common/listGroup";
 import MoviesTable from './moviesTable';
-
 import { paginate } from "../utils/paginate";
+
+import _ from 'lodash';
 
 class Movies extends Component {
   //iniitalise moves with aray of movies
@@ -15,7 +16,8 @@ class Movies extends Component {
     movies: [],
     genres: [],
     pageSize: 5,
-    currentPage: 1
+    currentPage: 1,
+    sortColumn: { path: 'title', order: 'asc' }
   };
 
   //vid 73 called when component is rendered in DOM
@@ -23,7 +25,7 @@ class Movies extends Component {
     /**vid 78 spread operator
      * create a new array of genres by copying exisitng one and adding all genres to the start of array
      */
-    const genres = [{ name: 'All Genres' }, ...getGenres()]
+    const genres = [{ _id: "", name: 'All Genres' }, ...getGenres()]
     this.setState({ movies: getMovies(), genres });
   }
 
@@ -61,12 +63,29 @@ class Movies extends Component {
     this.setState({ selectedGenre: genre, currentPage: 1 });
   };
 
+  handleSort = path => {
+    console.log(path);
+    //clone
+    const sortColumn = { ...this.state.sortColumn };
+    if (sortColumn.order === path)
+      sortColumn.order = (sortColumn.order === "asc") ? "desc" : "asc";
+    else {
+      sortColumn.path = path;
+      sortColumn.order = "asc";
+    }
+    this.setState({ sortColumn });
+  };
+
   render() {
     const count = this.state.movies.length;
     //vid40 also can be written as: const { length: count } = this.state.movies;
 
     //object destructuring extract from the state object
-    const { pageSize, selectedGenre, currentPage, movies: allMovies } = this.state;
+    const { pageSize,
+      selectedGenre,
+      currentPage,
+      sortColumn,
+      movies: allMovies } = this.state;
 
     if (count === 0) return <p>There are no movies in the database.</p>;
 
@@ -76,8 +95,11 @@ class Movies extends Component {
       ? allMovies.filter(m => m.genre._id === selectedGenre._id)
       : allMovies;
 
+    //sort
+    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+
     //call paginate function
-    const movies = paginate(filtered, currentPage, pageSize);
+    const movies = paginate(sorted, currentPage, pageSize);
 
     return (
       //in jsx must return single element i.e react fragment
@@ -95,7 +117,11 @@ class Movies extends Component {
         </div>
         <div className="col">
           <p>Showing {filtered.length} movies in the database.</p>
-          <MoviesTable movies={movies} onDelete={this.handleDelete} />
+          <MoviesTable
+            movies={movies}
+            onDelete={this.handleDelete}
+            onSort={this.handleSort}
+          />
           {/*bootstrap table*/}
 
           {/*zen coding tip:  table.table>thead>tr>th*4 and hit TAB to generate the table*/}
