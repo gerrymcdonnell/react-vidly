@@ -63,16 +63,7 @@ class Movies extends Component {
     this.setState({ selectedGenre: genre, currentPage: 1 });
   };
 
-  handleSort = path => {
-    console.log(path);
-    //clone
-    const sortColumn = { ...this.state.sortColumn };
-    if (sortColumn.order === path)
-      sortColumn.order = (sortColumn.order === "asc") ? "desc" : "asc";
-    else {
-      sortColumn.path = path;
-      sortColumn.order = "asc";
-    }
+  handleSort = sortColumn => {
     this.setState({ sortColumn });
   };
 
@@ -117,12 +108,14 @@ class Movies extends Component {
         </div>
         <div className="col">
           <p>Showing {filtered.length} movies in the database.</p>
+          
           <MoviesTable
             movies={movies}
             onDelete={this.handleDelete}
             onSort={this.handleSort}
+            sortColumn={sortColumn}
           />
-          {/*bootstrap table*/}
+
 
           {/*zen coding tip:  table.table>thead>tr>th*4 and hit TAB to generate the table*/}
 
