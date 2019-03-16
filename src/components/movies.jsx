@@ -19,7 +19,11 @@ class Movies extends Component {
 
   //vid 73 called when component is rendered in DOM
   componentDidMount() {
-    this.setState({ movies: getMovies(), genres: getGenres() });
+    /**vid 78 spread operator
+     * create a new array of genres by copying exisitng one and adding all genres to the start of array
+     */
+    const genres = [{ name: 'All Genres' }, ...getGenres()]
+    this.setState({ movies: getMovies(), genres });
   }
 
   /*not sure how this works*/
@@ -67,7 +71,7 @@ class Movies extends Component {
 
     //vid77 if the genre is selected apply filter otherwise dont
     //turnery operator filter the movies so that the genre is the same as the selected genre id
-    const filtered = selectedGenre
+    const filtered = selectedGenre && selectedGenre._id
       ? allMovies.filter(m => m.genre._id === selectedGenre._id)
       : allMovies;
 
