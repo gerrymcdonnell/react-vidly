@@ -8,6 +8,8 @@ import ListGroup from "./common/listGroup";
 import MoviesTable from './moviesTable';
 import { paginate } from "../utils/paginate";
 
+
+
 import _ from 'lodash';
 
 class Movies extends Component {
@@ -48,7 +50,13 @@ class Movies extends Component {
   };
 
   //TBI
-  handleLike = movie => { };
+  handleLike = movie => {
+    const movies = [...this.state.movies];
+    const index = movies.indexOf(movie);
+    movies[index] = { ...movies[index] };
+    movies[index].liked = !movies[index].liked;
+    this.setState({ movies });
+  };
 
   //vid 67
   handlePageChange = page => {

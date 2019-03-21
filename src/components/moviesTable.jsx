@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 import TableHeader from './common/tableHeader';
+import Like from "./common/like";
+
 class MoviesTable extends Component {
 
     columns = [
@@ -36,7 +38,12 @@ class MoviesTable extends Component {
                             <td>{movie.numberInStock}</td>
                             <td>{movie.dailyRentalRate}</td>
 
-                            <td>Like</td>
+                            <td>
+                                <Like
+                                    liked={movie.liked}
+                                    onClick={() => onLike(movie)}
+                                />
+                            </td>
                             {/*zen coding button.btn.btn-danger.btn-sm and press TAB at end*/}
 
                             <td>
