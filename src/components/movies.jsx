@@ -75,21 +75,21 @@ class Movies extends Component {
     this.setState({ sortColumn });
   };
 
-  render() {
-    const count = this.state.movies.length;
-    //vid40 also can be written as: const { length: count } = this.state.movies;
+
+  //vid 89
+  getPagedData = () => {
 
     //object destructuring extract from the state object
-    const { pageSize,
+    const {
+      pageSize,
       selectedGenre,
       currentPage,
       sortColumn,
       movies: allMovies } = this.state;
 
-    if (count === 0) return <p>There are no movies in the database.</p>;
 
-    //vid77 if the genre is selected apply filter otherwise dont
-    //turnery operator filter the movies so that the genre is the same as the selected genre id
+    // vid77 if the genre is selected apply filter otherwise dont
+    // turnery operator filter the movies so that the genre is the same as the selected genre id
     const filtered = selectedGenre && selectedGenre._id
       ? allMovies.filter(m => m.genre._id === selectedGenre._id)
       : allMovies;
@@ -99,6 +99,26 @@ class Movies extends Component {
 
     //call paginate function
     const movies = paginate(sorted, currentPage, pageSize);
+
+    return { totalCount: filtered.length, data: movies };
+  }
+
+
+  render() {
+    const count = this.state.movies.length;
+    //vid40 also can be written as: const { length: count } = this.state.movies;
+
+    //object destructuring extract from the state object
+    const {
+      pageSize,
+      currentPage,
+      sortColumn
+    } = this.state;
+
+    if (count === 0) return <p>There are no movies in the database.</p>;
+
+    const { totalCount, data: movies } = this.getPagedData();
+
 
     return (
       //in jsx must return single element i.e react fragment
@@ -115,7 +135,7 @@ class Movies extends Component {
 
         </div>
         <div className="col">
-          <p>Showing {filtered.length} movies in the database.</p>
+          <p>Showing {totalCount} movies in the database.</p>
           {/** display the movies component and the various events to the handlers */}
           <MoviesTable
             movies={movies}
@@ -131,7 +151,7 @@ class Movies extends Component {
 
 
           <Pagination
-            itemsCount={filtered.length}
+            itemsCount={totalCount}
             pageSize={pageSize}
             onPageChange={this.handlePageChange}
             currentPage={currentPage}
