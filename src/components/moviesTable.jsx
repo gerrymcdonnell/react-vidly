@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 
 import TableHeader from './common/tableHeader';
+import TableBody from './common/tableBody';
+
 import Like from "./common/like";
+
 
 class MoviesTable extends Component {
 
@@ -26,38 +29,12 @@ class MoviesTable extends Component {
                     onSort={onSort}
                 />
 
+                {/**vid 84: create table body component and pass in the movies array */}
+                <TableBody columns={this.columns} data={movies} />
+
                 {/* zen coding tbody>tr>td*4 */}
+                
 
-                <tbody>
-                    {/*vid 38: map each movie object and map to a tr elemenet*/}
-                    {/** vid 39: must use key attribute on element being repeated */}
-                    {movies.map(movie => (
-                        <tr key={movie._id}>
-                            <td>{movie.title}</td>
-                            <td>{movie.genre.name}</td>
-                            <td>{movie.numberInStock}</td>
-                            <td>{movie.dailyRentalRate}</td>
-
-                            <td>
-                                <Like
-                                    liked={movie.liked}
-                                    onClick={() => onLike(movie)}
-                                />
-                            </td>
-                            {/*zen coding button.btn.btn-danger.btn-sm and press TAB at end*/}
-
-                            <td>
-                                {/*to pass an agrumnet use an arrow function for handleDelete */}
-                                <button
-                                    onClick={() => onDelete(movie)}
-                                    className="btn btn-danger btn-sm"
-                                >
-                                    Delete
-                    </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
             </table>
         );
     }
