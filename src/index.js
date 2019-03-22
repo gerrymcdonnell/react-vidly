@@ -4,9 +4,6 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-//import component ex
-import Movies from "./components/movies";
-
 // import bootstrap v4
 import "bootstrap/dist/css/bootstrap.css";
 //font awesome
