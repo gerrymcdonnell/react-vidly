@@ -6,7 +6,7 @@ import Input from './common/input';
 class LoginForm extends Component {
 
     // vid 114 note: use of ref in react should be limited
-    username = React.createRef();
+    //username = React.createRef();
 
     //give username field focus
     /*componentDidMount(){
@@ -15,48 +15,66 @@ class LoginForm extends Component {
 
     state = {
         account: {
-            username: '', 
+            username: '',
             password: ''
         }
+    }
+
+    validate = () => {
+
+        const errors = {};
+
+        const { account } = this.state;
+
+        if (account.username.trim() === '')
+            errors.username = 'Username required';
+        if (account.password.trim() === '')
+            errors.password = 'Password required';
+
+        return Object.keys(errors).length === 0 ? null : errors;
     }
 
     handleSubmit = e => {
         //prevent default behaviour of form
         e.preventDefault();
 
-        //uses ref object to get vlaue of input field
-        const username = this.username.current.value;
+        const errors = this.validate();
+        console.log(errors);
+        this.setState({ errors });
 
-        //call the server
-        console.log('submitted');
+        if (errors) return;
+
+        //uses ref object to get vlaue of input field
+        //const username = this.username.current.value;       
+        
     }
 
 
-    handleChange=e=>{
-        const account={...this.state.account};
-        account[e.currentTarget.name]=e.currentTarget.value;
-        this.setState({account});
+    handleChange = e => {
+        const account = { ...this.state.account };
+        account[e.currentTarget.name] = e.currentTarget.value;
+        this.setState({ account });
     }
 
     render() {
 
         //object destructuring. Pick account property of this.state
-        const {account}=this.state;
+        const { account } = this.state;
 
         return (
             <div>
                 <h1>Login</h1>
                 {/* form>(div.form-group>label+input.form-control)*2 */}
                 <form onSubmit={this.handleSubmit}>
-             
-                    <Input 
+
+                    <Input
                         name="username"
                         value={account.username}
                         label="Username"
                         onChange={this.handleChange}
                     />
 
-                    <Input 
+                    <Input
                         name="password"
                         value={account.password}
                         label="Password"
