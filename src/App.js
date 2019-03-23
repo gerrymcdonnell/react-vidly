@@ -6,6 +6,7 @@ import NotFound from "./components/notFound";
 import Movies from "./components/movies";
 import "./App.css";
 import Navbar from './components/common/navBar';
+import Home from './components/common/home';
 
 class App extends Component {
   render() {
@@ -19,7 +20,7 @@ class App extends Component {
         <Switch>
           <Route path="/movies" component={Movies} />
           <Route path="/not-found" component={NotFound} />
-          <Route path="/" exact component={Movies} />
+          <Route path="/" exact component={Home} />
           <Redirect to="/not-found" />
         </Switch>
 
