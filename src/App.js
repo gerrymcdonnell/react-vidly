@@ -27,6 +27,7 @@ class App extends Component {
 
           <Route path="/not-found" component={NotFound} />
           <Route path="/" exact component={Home} />
+          <Redirect from="/" to="/movies"/>
           <Redirect to="/not-found" />
         </Switch>
 
