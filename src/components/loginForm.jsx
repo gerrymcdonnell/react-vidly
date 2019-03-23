@@ -11,6 +11,12 @@ class LoginForm extends Component {
         this.username.current.focus();
     }*/
 
+    state = {
+        account: {
+            username: '', password: ''
+        }
+    }
+
     handleSubmit = e => {
         //prevent default behaviour of form
         e.preventDefault();
@@ -22,6 +28,13 @@ class LoginForm extends Component {
         console.log('submitted');
     }
 
+
+    handleChange=e=>{
+        const account={...this.state.account};
+        account.username=e.currentTarget.value;
+        this.setState({account});
+    }
+
     render() {
         return (
             <div>
@@ -30,7 +43,10 @@ class LoginForm extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="username">Username</label>
-                        <input autoFocus ref={this.username} id="username" type="text" className="form-control" />
+                        <input 
+                            value={this.state.account.username}
+                            onChange={this.handleChange}
+                            autoFocus ref={this.username} id="username" type="text" className="form-control" />
                     </div>
 
                     <div className="form-group">
