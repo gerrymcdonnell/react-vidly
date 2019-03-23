@@ -14,10 +14,8 @@ class LoginForm extends Component {
     }*/
 
     state = {
-        account: {
-            username: '',
-            password: ''
-        }
+        account: {username: '', password: '' },
+        errors:{}
     }
 
     validate = () => {
@@ -46,7 +44,7 @@ class LoginForm extends Component {
 
         //uses ref object to get vlaue of input field
         //const username = this.username.current.value;       
-        
+
     }
 
 
@@ -59,7 +57,7 @@ class LoginForm extends Component {
     render() {
 
         //object destructuring. Pick account property of this.state
-        const { account } = this.state;
+        const { account, errors } = this.state;
 
         return (
             <div>
@@ -72,6 +70,7 @@ class LoginForm extends Component {
                         value={account.username}
                         label="Username"
                         onChange={this.handleChange}
+                        error={errors.username}
                     />
 
                     <Input
@@ -79,6 +78,7 @@ class LoginForm extends Component {
                         value={account.password}
                         label="Password"
                         onChange={this.handleChange}
+                        error={errors.password}
                     />
 
                     <button className="btn btn-primary">Login</button>
