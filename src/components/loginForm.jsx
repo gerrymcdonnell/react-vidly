@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import Joi from 'joi-browser';
 
 import Input from './common/input';
+import Form from './common/form';
 
-class LoginForm extends Component {
+class LoginForm extends Form {
 
     // vid 114 note: use of ref in react should be limited
     //username = React.createRef();
@@ -15,7 +16,7 @@ class LoginForm extends Component {
     }*/
 
     state = {
-        account: {username: '', password: '' },
+        data: {username: '', password: '' },
         errors:{}
     }
 
@@ -25,64 +26,18 @@ class LoginForm extends Component {
         password:Joi.string().required().label('Password')
     }
 
-    validate = () => {
-        /**joi terminate validation as soon as first error occcurs i.e abortearly */
-        const options={abortEarly:false};
-        const {error}=Joi.validate(this.state.account,this.schema,options);        
-
-        if(!error) return null;
-
-        const errors = {};
-        for(let item of error.details)
-            errors[item.path[0]]=item.message;
-        return errors;
-    }
-
-    handleSubmit = e => {
-        //prevent default behaviour of form
-        e.preventDefault();
-
-        const errors = this.validate();
-        console.log(errors);
-        this.setState({ errors });
-
-        if (errors) return;
-
-        //uses ref object to get vlaue of input field
-        //const username = this.username.current.value;       
-
-    }
-
-    validateProperty=({name,value})=>{
-        const obj={[name]:value};
-        const schema={[name]:this.schema[name]};
-        const {error}=Joi.validate(obj,schema);
-
-        return error?error.details[0].message: null;
-
-    }
-
     
-    handleChange = ({currentTarget:input}) => {
 
-        console.log('hyandle change');
-        
-        const errors={...this.state.errors};
-        const errorMessage=this.validateProperty(input);
-
-        if(errorMessage) errors[input.name]=errorMessage;
-        else delete errors[input.name];       
-        
-        const account = { ...this.state.account };        
-        account[input.name] = input.value;
-
-        this.setState({ account ,errors});
+    doSubmit=()=>{
+        //call server
+        console.log('submitted');
     }
 
+  
     render() {
 
         //object destructuring. Pick account property of this.state
-        const { account, errors } = this.state;
+        const { data, errors } = this.state;
 
         return (
             <div>
@@ -92,7 +47,7 @@ class LoginForm extends Component {
 
                     <Input
                         name="username"
-                        value={account.username}
+                        value={data.username}
                         label="Username"
                         onChange={this.handleChange}
                         error={errors.username}
@@ -100,7 +55,7 @@ class LoginForm extends Component {
 
                     <Input
                         name="password"
-                        value={account.password}
+                        value={data.password}
                         label="Password"
                         onChange={this.handleChange}
                         error={errors.password}
