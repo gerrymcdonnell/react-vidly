@@ -22,7 +22,7 @@ import React from 'react';
 // }
 
 // object destructing version
-const Input = ({name,label,value,onChange,error}) => {
+const Input = ({type,name,label,value,onChange,error}) => {
     return ( 
         <div className="form-group">
             <label htmlFor={name}>{label}</label>
@@ -31,8 +31,9 @@ const Input = ({name,label,value,onChange,error}) => {
                 onChange={onChange}
                 name={name}
                 autoFocus 
-                id={name} 
-                type="text" className="form-control" />
+                id={name}                 
+                type={type} 
+                className="form-control" />
                 
                 {/* vid 121
                 conditional rendering
