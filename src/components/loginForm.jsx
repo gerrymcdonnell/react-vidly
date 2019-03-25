@@ -20,14 +20,14 @@ class LoginForm extends Component {
     }
 
     //shema for joi
-    shema={
-        username:Joi.string.required(),
-        password:Joi.string().required
+    schema={
+        username:Joi.string().required(),
+        password:Joi.string().required()
     }
 
     validate = () => {
-
-        const result=Joi.validate(this.state.account,this.shema);
+        /**joi terminate validation as soon as first error occcurs i.e abortearly */
+        const result=Joi.validate(this.state.account,this.schema,{abortEarly:false});
         console.log(result);
 
         const errors = {};
