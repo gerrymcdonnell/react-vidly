@@ -22,17 +22,16 @@ import React from 'react';
 // }
 
 // object destructing version
-const Input = ({type,name,label,value,onChange,error}) => {
+//vid 129 rest operator gets other properites from props object
+const Input = ({name,label,error,value,...rest}) => {
     return ( 
         <div className="form-group">
             <label htmlFor={name}>{label}</label>
             <input 
-                value={value}
-                onChange={onChange}
-                name={name}
+                {...rest}
+                name={name}                
                 autoFocus 
-                id={name}                 
-                type={type} 
+                id={name}      
                 className="form-control" />
                 
                 {/* vid 121
