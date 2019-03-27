@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+//{} denotes component
+import {ToastContainer} from 'react-toastify';
+
 //import route component
 import { Route, Switch, Redirect } from 'react-router-dom'
 
@@ -10,13 +13,17 @@ import Customers from './components/customers';
 import Rentals from './components/rentals';
 import MovieForm from './components/movieForm';
 import LoginForm from './components/loginForm';
+
 import "./App.css";
+//import toastift css
+import 'react-toastify/dist/ReactToastify.css';
 
 class App extends Component {
   render() {
 
     return (
       <React.Fragment>
+        <ToastContainer></ToastContainer>
         <NavBar />
         <main className="container">
           <Switch>
