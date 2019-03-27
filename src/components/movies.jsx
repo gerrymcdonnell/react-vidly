@@ -12,8 +12,8 @@ import { paginate } from "../utils/paginate";
 
 import {toast} from 'react-toastify';
 
-
 import _ from 'lodash';
+import SearchBox from './searchBox';
 
 class Movies extends Component {
   //iniitalise moves with aray of movies
@@ -21,6 +21,7 @@ class Movies extends Component {
     movies: [],
     genres: [],
     pageSize: 5,
+    searchQuery: "",
     currentPage: 1,
     sortColumn: { path: 'title', order: 'asc' }
   };
@@ -39,6 +40,11 @@ class Movies extends Component {
 
     this.setState({ movies, genres });
   }
+
+  handleSearch = query => {
+    this.setState({ searchQuery: query, selectedGenre: null, currentPage: 1 });
+  };
+
 
   /*not sure how this works*/
   /*handleDelete = movie => {
@@ -104,14 +110,19 @@ class Movies extends Component {
       selectedGenre,
       currentPage,
       sortColumn,
+      searchQuery,
       movies: allMovies } = this.state;
 
 
     // vid77 if the genre is selected apply filter otherwise dont
     // turnery operator filter the movies so that the genre is the same as the selected genre id
-    const filtered = selectedGenre && selectedGenre._id
-      ? allMovies.filter(m => m.genre._id === selectedGenre._id)
-      : allMovies;
+    let filtered = allMovies;
+    if (searchQuery)
+      filtered = allMovies.filter(m =>
+        m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    else if (selectedGenre && selectedGenre._id)
+      filtered = allMovies.filter(m => m.genre._id === selectedGenre._id);
 
     //sort
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
@@ -131,7 +142,8 @@ class Movies extends Component {
     const {
       pageSize,
       currentPage,
-      sortColumn
+      sortColumn,
+      searchQuery
     } = this.state;
 
     if (count === 0) return <p>There are no movies in the database.</p>;
@@ -155,6 +167,9 @@ class Movies extends Component {
         </div>
         <div className="col">
           <p>Showing {totalCount} movies in the database.</p>
+          
+          <SearchBox value={searchQuery} onChange={this.handleSearch} />
+          
           {/** display the movies component and the various events to the handlers */}
           <MoviesTable
             movies={movies}
