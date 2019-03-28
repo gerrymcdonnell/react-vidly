@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
 //curly braces for named expoprts
 import { getMovies,deleteMovie } from "../services/movieService";
 
@@ -166,6 +168,16 @@ class Movies extends Component {
 
         </div>
         <div className="col">
+
+
+          <Link
+            to="/movies/new"
+            className="btn btn-primary"
+            style={{ marginBottom: 20 }}
+          >
+            New Movie
+          </Link>
+
           <p>Showing {totalCount} movies in the database.</p>
           
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
