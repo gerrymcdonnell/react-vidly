@@ -8,7 +8,8 @@ import * as userService from '../services/userService';
 
 class RegisterForm extends Form {
   state = {
-    data: { username: "", password: "", name: "" },
+    // not defaults are set for demo purposes
+    data: { username: "ted@ted.com", password: "tedted", name: "ted" },
     errors: {}
   };
 
@@ -19,7 +20,7 @@ class RegisterForm extends Form {
       .label("Username"),
     password: Joi.string()
       .required()
-      .min(5)
+      .min(3)
       .label("Password"),
     name: Joi.string()
       .required()
@@ -27,14 +28,26 @@ class RegisterForm extends Form {
   };
 
 
-  doSubmit = () => {
+  doSubmit = async () => {
     // Call the server
     console.log("Submitted");
-    
+
     // returns a promise so we need to
     // await it and 
     // make function call async
-    await userService.register(this.state.data);
+    try {
+      await userService.register(this.state.data);
+    }
+    //vid 170
+    catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+
+        const errors = { ...this.state.errors };
+        errors.username = ex.response.data;
+        this.setState({ errors });
+      }
+    }
+
   };
 
 
