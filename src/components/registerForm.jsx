@@ -37,7 +37,12 @@ class RegisterForm extends Form {
     // await it and 
     // make function call async
     try {
-      await userService.register(this.state.data);
+      const respose=await userService.register(this.state.data);
+      //console.log(respose);
+      localStorage.setItem('token',respose.headers['x-auth-token']);
+
+      //redirect user back to homepage
+      this.props.history.push('/');
     }
     //vid 170
     catch (ex) {
