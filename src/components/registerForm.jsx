@@ -9,7 +9,8 @@ import * as userService from '../services/userService';
 class RegisterForm extends Form {
   state = {
     // not defaults are set for demo purposes
-    data: { username: "ted@ted.com", password: "tedted", name: "ted" },
+    //data: { username: "ted@ted.com", password: "tedted", name: "ted" },
+    data: { username: "", password: "", name: "" },
     errors: {}
   };
 

@@ -5,6 +5,8 @@ import Joi from 'joi-browser';
 import Input from './common/input';
 import Form from './common/form';
 
+import {login} from '../services/authService';
+
 class LoginForm extends Form {
 
     // vid 114 note: use of ref in react should be limited
@@ -28,9 +30,24 @@ class LoginForm extends Form {
 
 
 
-    doSubmit = () => {
+    doSubmit = async () => {
         //call server
-        console.log('submitted');
+        //console.log('Login submitted');
+        
+        try{
+            //vid 172 object destructing
+            const {data}=this.state;
+            await login(data.username,data.password);
+        }
+        catch(ex){            
+            if (ex.response && ex.response.status === 400) {
+                const errors = { ...this.state.errors };
+                errors.username = ex.response.data;
+                this.setState({ errors });
+            }
+        }
+
+
     }
 
 
