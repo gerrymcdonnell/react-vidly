@@ -1,8 +1,14 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
+
+//requires mongoDB rundding and the expressJS backend
 import { getMovie, saveMovie } from "../services/movieService";
 import { getGenres } from "../services/genreService";
+
+//simulated
+/*import { getMovie, saveMovie } from "../services/fakeMovieService";
+import { getGenres } from "../services/fakeGenreService";*/
 
 class MovieForm extends Form {
   state = {
@@ -41,17 +47,28 @@ class MovieForm extends Form {
     this.setState({ genres });
   }
 
+  //problem here
   async populateMovie() {
+    
     try {
       const movieId = this.props.match.params.id;
       if (movieId === "new") return;
 
       const { data: movie } = await getMovie(movieId);
+
+      console.log(movie);
+
+      //set the state using the new data
+      console.log(this.mapToViewModel(movie) );
+      
       this.setState({ data: this.mapToViewModel(movie) });
+
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         this.props.history.replace("/not-found");
+        console.log('error getting movie');
     }
+
   }
 
   async componentDidMount() {

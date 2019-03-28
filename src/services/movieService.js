@@ -12,6 +12,7 @@ export function getMovies() {
 }
 
 export function getMovie(movieId) {
+  //console.log('get movie:',movieUrl(movieId));
   return http.get(movieUrl(movieId));
 }
 
