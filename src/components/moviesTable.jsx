@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Table from './common/table';
 import Like from "./common/like";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class MoviesTable extends Component {
 

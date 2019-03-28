@@ -1,11 +1,11 @@
 //imrc
-import React, { Component } from 'react';
+import React from 'react';
 import Joi from 'joi-browser';
 
-import Input from './common/input';
 import Form from './common/form';
 
-import {login} from '../services/authService';
+//import object called auth
+import auth from '../services/authService';
 
 class LoginForm extends Form {
 
@@ -39,11 +39,8 @@ class LoginForm extends Form {
             const {data}=this.state;
             
             //vid 174 get the jwt
-            const {data:jwt}=await login(data.username,data.password);
-            //store jwt in localstorage
-            localStorage.setItem('token',jwt);
-            //console.log('jwt= ',jwt);
-
+            await auth.login(data.username,data.password);    
+            
             //redirect user back to homepage
             window.location='/';
         }
@@ -54,7 +51,6 @@ class LoginForm extends Form {
                 this.setState({ errors });
             }
         }
-
 
     }
 

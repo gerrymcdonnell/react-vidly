@@ -5,6 +5,7 @@ import Form from "./common/form";
 //import {register} from '../services/userService';
 //or import all
 import * as userService from '../services/userService';
+import auth from '../services/authService';
 
 class RegisterForm extends Form {
   state = {
@@ -39,7 +40,7 @@ class RegisterForm extends Form {
     try {
       const respose=await userService.register(this.state.data);
       //console.log(respose);
-      localStorage.setItem('token',respose.headers['x-auth-token']);
+      auth.loginWithJwt(respose.headers['x-auth-token']);
 
       //redirect user back to homepage
       window.location('/');
