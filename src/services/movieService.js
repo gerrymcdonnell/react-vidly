@@ -1,9 +1,10 @@
 
 import http from './httpService';
+import config from '../config.json';
 
 //returns all movies
 export function getMovies() {
-  return http.get('http://localhost:3900/api/movies')
+  return http.get(config.apiUrl+'/movies')
 }
 
 //1 movie
@@ -27,5 +28,5 @@ export function getMovies() {
 }*/
 
 export function deleteMovie(movieId) {
-    return http.delete('http://localhost:3900/api/movies'+'/'+movieId);
+    return http.delete(config.apiUrl+'/movies/'+movieId);
 }
