@@ -18,7 +18,7 @@ class LoginForm extends Form {
     }*/
 
     state = {
-        data: { username: '', password: '' },
+        data: { username: 'ted@ted.com', password: 'tedted' },
         errors: {}
     }
 
@@ -37,7 +37,15 @@ class LoginForm extends Form {
         try{
             //vid 172 object destructing
             const {data}=this.state;
-            await login(data.username,data.password);
+            
+            //vid 174 get the jwt
+            const {data:jwt}=await login(data.username,data.password);
+            //store jwt in localstorage
+            localStorage.setItem('token',jwt);
+            console.log('jwt= ',jwt);
+
+            //redirect user back to homepage
+            this.props.history.push('/');
         }
         catch(ex){            
             if (ex.response && ex.response.status === 400) {
