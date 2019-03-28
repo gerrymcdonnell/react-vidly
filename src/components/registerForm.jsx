@@ -42,7 +42,7 @@ class RegisterForm extends Form {
       localStorage.setItem('token',respose.headers['x-auth-token']);
 
       //redirect user back to homepage
-      this.props.history.push('/');
+      window.location('/');
     }
     //vid 170
     catch (ex) {

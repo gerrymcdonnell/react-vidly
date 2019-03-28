@@ -42,10 +42,10 @@ class LoginForm extends Form {
             const {data:jwt}=await login(data.username,data.password);
             //store jwt in localstorage
             localStorage.setItem('token',jwt);
-            console.log('jwt= ',jwt);
+            //console.log('jwt= ',jwt);
 
             //redirect user back to homepage
-            this.props.history.push('/');
+            window.location='/';
         }
         catch(ex){            
             if (ex.response && ex.response.status === 400) {
