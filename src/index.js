@@ -13,7 +13,7 @@ import "font-awesome/css/font-awesome.css";
 import { BrowserRouter } from 'react-router-dom';
 
 //test env variables
-console.log('ev file',process.env);
+console.log('ev file',process.env.REACT_APP_NAME);
 
 ReactDOM.render(
     <BrowserRouter>
@@ -24,4 +24,4 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.register();
+serviceWorker.unregister();
