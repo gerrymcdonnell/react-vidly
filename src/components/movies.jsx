@@ -2,20 +2,18 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 //curly braces for named expoprts
-import { getMovies,deleteMovie } from "../services/movieService";
-
+import { getMovies, deleteMovie } from "../services/movieService";
 //import { getGenres } from "../services/fakeGenreService";
 import { getGenres } from "../services/genreService";
-
 import Pagination from "./common/pagination";
 import ListGroup from "./common/listGroup";
 import MoviesTable from './moviesTable';
 import { paginate } from "../utils/paginate";
-
-import {toast} from 'react-toastify';
-
-import _ from 'lodash';
 import SearchBox from './searchBox';
+
+import { toast } from 'react-toastify';
+import _ from 'lodash';
+
 
 class Movies extends Component {
   //iniitalise moves with aray of movies
@@ -34,11 +32,11 @@ class Movies extends Component {
      * create a new array of genres by copying exisitng one and adding all genres to the start of array
      */
     //new genre service
-    const{data}=await getGenres();
+    const { data } = await getGenres();
     const genres = [{ _id: "", name: 'All Genres' }, ...data]
 
 
-    const {data:movies}=await getMovies();
+    const { data: movies } = await getMovies();
 
     this.setState({ movies, genres });
   }
@@ -56,8 +54,8 @@ class Movies extends Component {
 
   //uses arrow function syntax
   handleDelete = async movie => {
-    
-    const originalMovies=this.state.movies;   
+
+    const originalMovies = this.state.movies;
 
     //arrow function get all the movies except the one been passed in
     const movies = originalMovies.filter(m => m._id !== movie._id);
@@ -65,14 +63,14 @@ class Movies extends Component {
     //set the movies property to our new movies object which will overide props of state object
     this.setState({ movies });
 
-    try{
+    try {
       await deleteMovie(movie._id);
     }
-    catch(ex){
-      if (ex.response && ex.response.status === 404)        
+    catch (ex) {
+      if (ex.response && ex.response.status === 404)
         toast.error('This movie has already being deleted')
-        //revert change due to error
-        this.setState({ movies: originalMovies });
+      //revert change due to error
+      this.setState({ movies: originalMovies });
     }
   };
 
@@ -151,7 +149,9 @@ class Movies extends Component {
     if (count === 0) return <p>There are no movies in the database.</p>;
 
     const { totalCount, data: movies } = this.getPagedData();
-
+    
+    //current user
+    const {user}=this.props;
 
     return (
       //in jsx must return single element i.e react fragment
@@ -168,20 +168,22 @@ class Movies extends Component {
 
         </div>
         <div className="col">
-
-
-          <Link
-            to="/movies/new"
-            className="btn btn-primary"
-            style={{ marginBottom: 20 }}
-          >
-            New Movie
-          </Link>
+          {console.log(user)}
+          
+          {user && (
+            <Link
+              to="/movies/new"
+              className="btn btn-primary"
+              style={{ marginBottom: 20 }}
+            >
+              New Movie
+            </Link>
+          )}
 
           <p>Showing {totalCount} movies in the database.</p>
-          
+
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
-          
+
           {/** display the movies component and the various events to the handlers */}
           <MoviesTable
             movies={movies}
