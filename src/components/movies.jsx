@@ -168,7 +168,7 @@ class Movies extends Component {
 
         </div>
         <div className="col">
-          {console.log(user)}
+         
           
           {user && (
             <Link
