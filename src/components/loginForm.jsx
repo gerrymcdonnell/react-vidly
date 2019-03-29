@@ -6,7 +6,7 @@ import Form from './common/form';
 //import object called auth
 import auth from '../services/authService';
 import { Redirect } from 'react-router-dom';
-import { O_RDWR } from 'constants';
+
 
 class LoginForm extends Form {
 
