@@ -17,10 +17,12 @@ import LoginForm from './components/loginForm';
 import RegisterForm from "./components/registerForm";
 
 import auth from './services/authService';
+import ProtectedRoute from './components/common/protectedRoute';
 
 import "./App.css";
 //import toastift css
 import 'react-toastify/dist/ReactToastify.css';
+
 
 
 class App extends Component {
@@ -44,7 +46,8 @@ class App extends Component {
             <Route path="/register" component={RegisterForm} />
             <Route path="/login" component={LoginForm} />
             <Route path="/logout" component={Logout} />
-            <Route path="/movies/:id" component={MovieForm} />
+
+            <ProtectedRoute path="/movies/:id" component={MovieForm} />
             
             {/* pass the user obect to the movies component. render attribute must be used */}
             <Route
