@@ -3,9 +3,10 @@ import React from 'react';
 import Joi from 'joi-browser';
 
 import Form from './common/form';
-
 //import object called auth
 import auth from '../services/authService';
+import { Redirect } from 'react-router-dom';
+import { O_RDWR } from 'constants';
 
 class LoginForm extends Form {
 
@@ -19,6 +20,7 @@ class LoginForm extends Form {
 
     state = {
         data: { username: 'ted@ted.com', password: 'tedted' },
+        // data: { username: '', password: '' },
         errors: {}
     }
 
@@ -40,9 +42,13 @@ class LoginForm extends Form {
             
             //vid 174 get the jwt
             await auth.login(data.username,data.password);    
+
+            //redirect after login
+            const{state}=this.props.location;
             
-            //redirect user back to homepage
-            window.location='/';
+            // redirect user back to homepage
+            // if state is defined then set the location to the page where we want to go other wise go to the home page
+            window.location=state ? state.from.pathname :'/';
         }
         catch(ex){            
             if (ex.response && ex.response.status === 400) {
@@ -57,7 +63,7 @@ class LoginForm extends Form {
 
     render() {
 
-
+        if(auth.getCurrentUser()) return <Redirect to="/" />
 
         return (
             <div>
