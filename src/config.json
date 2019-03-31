@@ -1,4 +1,4 @@
 {
-    "apiUrl": "https://vidlygithub.herokuapp.com/api/movies",
+    "apiUrl_notused": "https://vidlygithub.herokuapp.com/api/movies",
     "local_apiUrl": "http://localhost:3900/api"
 }
