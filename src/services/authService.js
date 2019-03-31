@@ -3,7 +3,7 @@ import { apiUrl } from "../config.json";
 //jwt decode npm i jwt-decode@2.2.0
 import jwtDecode from 'jwt-decode';
 
-const apiEndpoint = apiUrl + "/auth";
+const apiEndpoint = "/auth";
 const tokenKey = "token";
 
 http.setJwt(getJWT());

@@ -1,3 +1,4 @@
 {
-    "apiUrl": "http://localhost:3900/api"
+    "apiUrl": "https://calm-headland-82920.herokuapp.com/api",
+    "local_apiUrl": "http://localhost:3900/api"
 }

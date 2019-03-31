@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 //log service not implemented
 //import logger from "./logService";
 
+axios.defaults.baseURL=process.env.REACT_APP_API_URL;
 
 function setJwt(jwt){
     //jwt token header to be sent which each request
